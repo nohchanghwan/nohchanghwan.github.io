@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Event-Bus를 사용하여 컴포넌트간 통신하기 | @changpani</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="hello">
+    
+    <link rel="preload" href="/assets/css/0.styles.ac9dff87.css" as="style"><link rel="preload" href="/assets/js/app.19581b6f.js" as="script"><link rel="preload" href="/assets/js/2.ace158de.js" as="script"><link rel="preload" href="/assets/js/10.17b4b364.js" as="script"><link rel="prefetch" href="/assets/js/11.350a9136.js"><link rel="prefetch" href="/assets/js/12.6df056f2.js"><link rel="prefetch" href="/assets/js/3.093d32c1.js"><link rel="prefetch" href="/assets/js/4.c5dd30b5.js"><link rel="prefetch" href="/assets/js/5.3e79ab23.js"><link rel="prefetch" href="/assets/js/6.385998da.js"><link rel="prefetch" href="/assets/js/7.aebcf331.js"><link rel="prefetch" href="/assets/js/8.86cb6d12.js"><link rel="prefetch" href="/assets/js/9.94b87e7e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ac9dff87.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="https://avatars0.githubusercontent.com/u/18087121?s=400&amp;u=e65e9f8c3dd70b598730f0f2617fe3624730e61f&amp;v=4" alt="@changpani" class="logo"> <span class="site-name can-hide">@changpani</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  🏠 Home
+</a></div><div class="nav-item"><a href="/dev/vue/01.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  💻 Dev
+</a></div><div class="nav-item"><a href="/about/" class="nav-link">
+  😄 About
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  🏠 Home
+</a></div><div class="nav-item"><a href="/dev/vue/01.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  💻 Dev
+</a></div><div class="nav-item"><a href="/about/" class="nav-link">
+  😄 About
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Home</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Vue.js</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/dev/vue/01.html" aria-current="page" class="active sidebar-link">Event-Bus를 사용하여 컴포넌트간 통신하기</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/dev/vue/01.html#event-bus란" class="sidebar-link">Event Bus란?</a></li><li class="sidebar-sub-header"><a href="/dev/vue/01.html#event-bus-초기화" class="sidebar-link">Event Bus 초기화</a></li><li class="sidebar-sub-header"><a href="/dev/vue/01.html#event-bus-사용" class="sidebar-link">Event Bus 사용</a></li></ul></li><li><a href="/dev/vue/02.html" class="sidebar-link">Vuex를 이용한 데이터관리</a></li><li><a href="/dev/vue/03.html" class="sidebar-link">Vuex 스토어 State에 접근하는 4가지 방법</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>PWA</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p><em>2021-01-09</em></p> <h1 id="event-bus를-사용하여-컴포넌트간-통신하기"><a href="#event-bus를-사용하여-컴포넌트간-통신하기" class="header-anchor">#</a> Event-Bus를 사용하여 컴포넌트간 통신하기</h1> <p>아래는 외부 API를 통해 데이터를 받아오다보면 발생하는 공백동안 로딩화면(스피너)를 구현하고자 할 때, 이벤트 버스를 이용하여 구현하는 방식입니다.</p> <h2 id="event-bus란"><a href="#event-bus란" class="header-anchor">#</a> Event Bus란?</h2> <p>Vue JS의 eventBus는 컴포넌트간 데이터를 전달받을 수 있는 방법중 하나입니다.<br>
+비 부모-자식 간 컴포넌트 통신은 보통 Vuex를 이용해서 데이터를 관리하고 있지만 규모가작은 이벤트를 발생시킬경우에는 Event Bus로 간단하게 처리할 수 있습니다.</p> <h2 id="event-bus-초기화"><a href="#event-bus-초기화" class="header-anchor">#</a> Event Bus 초기화</h2> <p>기능에 비해 이벤트버스 생성은 어렵지 않습니다.<br>
+독립적인 컴포넌트간 통신때 사용할 수 있도록 하나의 Vue인스턴스만 생성해주면 됩니다.</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// utuls/bus.js</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="event-bus-사용"><a href="#event-bus-사용" class="header-anchor">#</a> Event Bus 사용</h2> <p>아래 코드는 데이터를 보여줄 화면(하위컴포넌트)에서</p> <ol><li>데이터를 받아오기전에 스피너를 실행시키는 이벤트를 발생시킨 뒤,</li> <li>스토어에서 디스패치가 완료될 경우 스피너를 종료시키는 이벤트를 발생시키는 코드입니다.</li></ol> <p>사전에 생성해둔 bus파일을 import하여 사용하며, <code>$emit</code> 메소드를 통해 이벤트를 보낼 수 있습니다.</p> <div class="language-js extra-class"><div class="highlight-lines"><br><div class="highlighted"> </div><br><br><br><br><div class="highlighted"> </div><br><br><br><br><div class="highlighted"> </div><br><br><br><br><br></div><pre class="language-js"><code><span class="token comment">// views/DataList.vue</span>
+<span class="token keyword">import</span> bus <span class="token keyword">from</span> <span class="token string">'../utils/bus.js'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token function">created</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// startSpinner</span>
+    bus<span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">'start:spinner'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'FETCH_NEWS'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'fetched'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// endSpinner</span>
+          bus<span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">'end:spinner'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="custom-block tip"><p>'start:spinner', 'end:spinner' 와 같이 이벤트이름 혹은 같이보낼 데이터를 포함 할 수 있습니다</p></div> <p>해당이벤트를 받는 상위 컴포넌트에서는 <code>$on</code> 메소드를 통해 이벤트를 받을 수 있습니다.<br>
+이벤트를 받을때 데이터의 상태를 변화시켜 스피너를 활성화/비활성화 시키는 방식으로 동작하게 됩니다.</p> <div class="language-js extra-class"><div class="highlight-lines"><div class="highlighted"> </div><br><br><br><br><br><br><br><br><br><br><br><div class="highlighted"> </div><div class="highlighted"> </div><br><br><br></div><pre class="language-js"><code><span class="token keyword">import</span> bus <span class="token keyword">from</span> <span class="token string">'./utils/bus.js'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  methods<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">startSpinner</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>loadingStatus <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">endSpinner</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>loadingStatus <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function">created</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    bus<span class="token punctuation">.</span><span class="token function">$on</span><span class="token punctuation">(</span><span class="token string">'start:spinner'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>startSpinner<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bus<span class="token punctuation">.</span><span class="token function">$on</span><span class="token punctuation">(</span><span class="token string">'end:spinner'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>endSpinner<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>마지막으로 Vue 컴포넌트 생성주기가 끝나기 전 이벤트버스를 해제해줍니다.</p> <div class="language-js extra-class"><div class="highlight-lines"><br><div class="highlighted"> </div><div class="highlighted"> </div><br><br></div><pre class="language-js"><code>  <span class="token function">beforeDestroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    bus<span class="token punctuation">.</span><span class="token function">$off</span><span class="token punctuation">(</span><span class="token string">'start:spinner'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>startSpinner<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bus<span class="token punctuation">.</span><span class="token function">$off</span><span class="token punctuation">(</span><span class="token string">'end:spinner'</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>endSpinner<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/" class="prev router-link-active">
+        소개
+      </a></span> <span class="next"><a href="/dev/vue/02.html">
+        Vuex를 이용한 데이터관리
+      </a>
+      →
+    </span></p></div>  <footer class="siteFooter">
+    © COPYRIGHT © 2021 ALL RIGHT changhwanno@gmail.com . GitHub . Blog .Repository
+  </footer></main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.19581b6f.js" defer></script><script src="/assets/js/2.ace158de.js" defer></script><script src="/assets/js/10.17b4b364.js" defer></script>
+  </body>
+</html>

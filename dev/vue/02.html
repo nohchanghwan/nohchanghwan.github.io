@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vuex를 이용한 데이터관리 | @changpani</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="hello">
+    
+    <link rel="preload" href="/assets/css/0.styles.ac9dff87.css" as="style"><link rel="preload" href="/assets/js/app.19581b6f.js" as="script"><link rel="preload" href="/assets/js/2.ace158de.js" as="script"><link rel="preload" href="/assets/js/11.350a9136.js" as="script"><link rel="prefetch" href="/assets/js/10.17b4b364.js"><link rel="prefetch" href="/assets/js/12.6df056f2.js"><link rel="prefetch" href="/assets/js/3.093d32c1.js"><link rel="prefetch" href="/assets/js/4.c5dd30b5.js"><link rel="prefetch" href="/assets/js/5.3e79ab23.js"><link rel="prefetch" href="/assets/js/6.385998da.js"><link rel="prefetch" href="/assets/js/7.aebcf331.js"><link rel="prefetch" href="/assets/js/8.86cb6d12.js"><link rel="prefetch" href="/assets/js/9.94b87e7e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ac9dff87.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="https://avatars0.githubusercontent.com/u/18087121?s=400&amp;u=e65e9f8c3dd70b598730f0f2617fe3624730e61f&amp;v=4" alt="@changpani" class="logo"> <span class="site-name can-hide">@changpani</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  🏠 Home
+</a></div><div class="nav-item"><a href="/dev/vue/01.html" class="nav-link">
+  💻 Dev
+</a></div><div class="nav-item"><a href="/about/" class="nav-link">
+  😄 About
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  🏠 Home
+</a></div><div class="nav-item"><a href="/dev/vue/01.html" class="nav-link">
+  💻 Dev
+</a></div><div class="nav-item"><a href="/about/" class="nav-link">
+  😄 About
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Home</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Vue.js</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/dev/vue/01.html" class="sidebar-link">Event-Bus를 사용하여 컴포넌트간 통신하기</a></li><li><a href="/dev/vue/02.html" aria-current="page" class="active sidebar-link">Vuex를 이용한 데이터관리</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/dev/vue/02.html#상태-관리-패턴" class="sidebar-link">상태 관리 패턴</a></li><li class="sidebar-sub-header"><a href="/dev/vue/02.html#컴포넌트에서-state에-접근하는-4가지-방법" class="sidebar-link">컴포넌트에서 State에 접근하는 4가지 방법</a></li></ul></li><li><a href="/dev/vue/03.html" class="sidebar-link">Vuex 스토어 State에 접근하는 4가지 방법</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>PWA</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><p><em>2021-01-21</em></p> <h1 id="vuex를-이용한-데이터관리"><a href="#vuex를-이용한-데이터관리" class="header-anchor">#</a> Vuex를 이용한 데이터관리</h1> <p><img src="https://vuex.vuejs.org/vuex.png" alt="Vuex"></p> <h2 id="상태-관리-패턴"><a href="#상태-관리-패턴" class="header-anchor">#</a> 상태 관리 패턴</h2> <p>state : 컴포넌트 간에 공유할 data<br>
+view : 데이터가 표현될 template<br>
+actions : 사용자의 입력에 따라 반응할 methods<br> <img src="https://vuex.vuejs.org/flow.png" alt="flow"></p> <h2 id="컴포넌트에서-state에-접근하는-4가지-방법"><a href="#컴포넌트에서-state에-접근하는-4가지-방법" class="header-anchor">#</a> 컴포넌트에서 State에 접근하는 4가지 방법</h2> <p>스토어의 state를 컴포넌트에서 접근하는 방법이 여러가지가 있는데</p> <h3 id="_1-템플릿에-this-store-state-속성-바인딩"><a href="#_1-템플릿에-this-store-state-속성-바인딩" class="header-anchor">#</a> 1. 템플릿에 <code>this.$store.state.속성</code> 바인딩</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token operator">&lt;</span>div v<span class="token operator">-</span><span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;item in this.$store.state.속성&quot;</span> v<span class="token operator">-</span>bind<span class="token operator">:</span>key<span class="token operator">=</span><span class="token string">&quot;item&quot;</span><span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span> item<span class="token punctuation">.</span>title <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+</code></pre></div><h3 id="_2-computed-속성에-this-store-state-속성"><a href="#_2-computed-속성에-this-store-state-속성" class="header-anchor">#</a> 2. computed 속성에 <code>this.$store.state.속성</code></h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> Counter <span class="token operator">=</span> <span class="token punctuation">{</span>
+  template<span class="token operator">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">&lt;div&gt;{{ count }}&lt;/div&gt;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  computed<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">count</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>count
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="_3-mapstate"><a href="#_3-mapstate" class="header-anchor">#</a> 3. mapState</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> mapState <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+  template<span class="token operator">:</span> <span class="token operator">&lt;</span>li v<span class="token operator">-</span><span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;item in mappingAsk&quot;</span> v<span class="token operator">-</span>bind<span class="token operator">:</span>key<span class="token operator">=</span><span class="token string">&quot;item&quot;</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;post&quot;</span><span class="token operator">&gt;</span>
+  computed<span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">//  mapState로 상태 불러오기</span>
+    <span class="token operator">...</span><span class="token function">mapState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token function-variable function">mappingAsk</span><span class="token operator">:</span> <span class="token parameter">state</span> <span class="token operator">=&gt;</span> state<span class="token punctuation">.</span>속성 
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</code></pre></div><h3 id="_4-computed-속성에-mapgetters"><a href="#_4-computed-속성에-mapgetters" class="header-anchor">#</a> 4. computed 속성에 mapGetters</h3> <div class="language-js extra-class"><pre class="language-js"><code>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/dev/vue/01.html" class="prev">
+        Event-Bus를 사용하여 컴포넌트간 통신하기
+      </a></span> <span class="next"><a href="/dev/vue/03.html">
+        Vuex 스토어 State에 접근하는 4가지 방법
+      </a>
+      →
+    </span></p></div>  <footer class="siteFooter">
+    © COPYRIGHT © 2021 ALL RIGHT changhwanno@gmail.com . GitHub . Blog .Repository
+  </footer></main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.19581b6f.js" defer></script><script src="/assets/js/2.ace158de.js" defer></script><script src="/assets/js/11.350a9136.js" defer></script>
+  </body>
+</html>
